@@ -7,7 +7,7 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 const int relayPin = 7;
 const int setLow   = 17;
 const int setHigh  = 25;
-const int deadband = 1
+const int deadband = 1;
 
 bool relayOn = false;
 
@@ -36,17 +36,29 @@ void loop() {
   lcd.setCursor(0,0);
   lcd.print(tempC); lcd.print((char)223);lcd.print("C ");
 
-  if (tempC > setLow && tempC < setHigh){
+  if (tempC > (setLow + deadband) && tempC < (setHigh - deadband)){
     digitalWrite(relayPin, HIGH);
     lcd.setCursor(0,1);
     lcd.print("Relay:ON ");
     relayOn = true;
   }
-  else {
+  else if (tempC < setLow) {
     digitalWrite(relayPin, LOW);
     lcd.setCursor(0,1);
     lcd.print("Relay:OFF");
-    relayOn = true;
+    relayOn = false;
+  }
+    else if (tempC > setHigh) {
+    digitalWrite(relayPin, LOW);
+    lcd.setCursor(0,1);
+    lcd.print("Relay:OFF");
+    relayOn = false;
+  }
+  else {
+    //digitalWrite(relayPin, LOW);
+    //lcd.setCursor(0,1);
+    //lcd.print("Relay:OFF");
+    //relayOn = false;
   }
 
   lcd.setCursor(12,0);
