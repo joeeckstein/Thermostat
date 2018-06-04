@@ -7,6 +7,7 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 const int relayPin = 7;
 const int setLow   = 17;
 const int setHigh  = 25;
+const int deadband = 1
 
 bool relayOn = false;
 
