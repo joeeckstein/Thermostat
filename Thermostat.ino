@@ -8,6 +8,8 @@ const int relayPin = 7;
 const int setLow   = 17;
 const int setHigh  = 25;
 
+bool relayOn = false;
+
 Adafruit_MPL3115A2 baro = Adafruit_MPL3115A2();
 
 void setup() {
@@ -15,6 +17,8 @@ void setup() {
   lcd.clear();
   lcd.print("Loading... v.4");
   pinMode(relayPin, OUTPUT);
+  digitalWrite(relayPin, LOW);
+  relayOn = false;
   delay(1000);
   lcd.clear();
 }
@@ -35,11 +39,13 @@ void loop() {
     digitalWrite(relayPin, HIGH);
     lcd.setCursor(0,1);
     lcd.print("Relay:ON ");
+    relayOn = true;
   }
   else {
     digitalWrite(relayPin, LOW);
     lcd.setCursor(0,1);
     lcd.print("Relay:OFF");
+    relayOn = true;
   }
 
   lcd.setCursor(12,0);
