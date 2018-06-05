@@ -16,13 +16,7 @@ const int setHigh  = 25;
 Adafruit_MPL3115A2 baro = Adafruit_MPL3115A2();
 
 void setup() {
-  //Serial.begin(9600);
-  //while (!Serial){
-    ; // Wait until serial connects
-  //}
-  //Serial.println("Adafruit_MPL3115A2 test!");
   lcd.begin(16, 2);
-  // Print a message to the LCD.
   lcd.clear();
   lcd.print("Loading... v.4");
   pinMode(relayPin, OUTPUT);
@@ -36,30 +30,22 @@ void loop() {
     lcd.print("Couldnt find sensor");
     return;
   }
-  
+
+  // getPressure is necessary in order to getTemperature
   float pascals = baro.getPressure();
-  // Our weather page presents pressure in Inches (Hg)
-  // Use http://www.onlineconversion.com/pressure.htm for other units
-  //Serial.print(pascals/3377); Serial.println(" Inches (Hg)");
-  
-  //float altm = baro.getAltitude();
-  //Serial.print(altm); Serial.println(" meters");
   
   float tempC = baro.getTemperature();
-  //Serial.print(tempC); Serial.println("*C");
 
   lcd.setCursor(0,0);
   lcd.print(tempC); lcd.print((char)223);lcd.print("C ");
 
   if (tempC > setLow && tempC < setHigh){
     digitalWrite(relayPin, HIGH);
-    //Serial.println("ON");
     lcd.setCursor(0,1);
     lcd.print("Relay:ON ");
   }
   else {
     digitalWrite(relayPin, LOW);
-    //Serial.println("OFF");
     lcd.setCursor(0,1);
     lcd.print("Relay:OFF");
   }
