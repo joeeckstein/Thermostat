@@ -8,6 +8,8 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 const int relayPin = 7;
 const int setLow   = 17;
 const int setHigh  = 25;
+const int deadband = 1;
+
 
 // Power by connecting Vin to 3-5V, GND to GND
 // Uses I2C - connect SCL to the SCL pin, SDA to SDA pin
@@ -39,20 +41,31 @@ void loop() {
   lcd.setCursor(0,0);
   lcd.print(tempC); lcd.print((char)223);lcd.print("C ");
 
-  if (tempC > setLow && tempC < setHigh){
+  if (tempC > (setLow + deadband) && tempC < (setHigh - deadband)){
     digitalWrite(relayPin, HIGH);
     lcd.setCursor(0,1);
     lcd.print("Relay:ON ");
   }
-  else {
+  else if (tempC < setLow) {
     digitalWrite(relayPin, LOW);
     lcd.setCursor(0,1);
     lcd.print("Relay:OFF");
+  }
+    else if (tempC > setHigh) {
+    digitalWrite(relayPin, LOW);
+    lcd.setCursor(0,1);
+    lcd.print("Relay:OFF");
+  }
+  else {
+    //digitalWrite(relayPin, LOW);
+    //lcd.setCursor(0,1);
+    //lcd.print("Relay:OFF");
+    //relayOn = false;
   }
 
   lcd.setCursor(12,0);
   lcd.print("L:"); lcd.print(setLow);
   lcd.setCursor(12,1);
   lcd.print("H:"); lcd.print(setHigh);
-  delay(900000);
+  delay(1000);
 }
