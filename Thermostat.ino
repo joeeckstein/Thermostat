@@ -67,5 +67,5 @@ void loop() {
   lcd.print("L:"); lcd.print(setLow);
   lcd.setCursor(12,1);
   lcd.print("H:"); lcd.print(setHigh);
-  delay(300000);
+  delay(3000);
 }
