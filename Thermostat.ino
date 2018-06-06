@@ -6,9 +6,9 @@
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 const int relayPin = 7;
-const int setLow   = 17;
-const int setHigh  = 25;
-const int deadband = 1;
+const float setLow   = 16.5;
+const float setHigh  = 26.5;
+const int deadband = 2;
 
 
 // Power by connecting Vin to 3-5V, GND to GND
@@ -67,5 +67,5 @@ void loop() {
   lcd.print("L:"); lcd.print(setLow);
   lcd.setCursor(12,1);
   lcd.print("H:"); lcd.print(setHigh);
-  delay(1000);
+  delay(300000);
 }
