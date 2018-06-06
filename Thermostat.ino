@@ -6,7 +6,7 @@
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 const int relayPin = 7;
-const float setLow   = 16.5;
+const float setLow   = 16;
 const float setHigh  = 26.5;
 const int deadband = 2;
 
@@ -24,6 +24,8 @@ void setup() {
   pinMode(relayPin, OUTPUT);
   delay(1000);
   lcd.clear();
+  lcd.setCursor(0,1);
+  lcd.print("DB");
 }
 
 void loop() {
@@ -44,17 +46,17 @@ void loop() {
   if (tempC > (setLow + deadband) && tempC < (setHigh - deadband)){
     digitalWrite(relayPin, HIGH);
     lcd.setCursor(0,1);
-    lcd.print("Relay:ON ");
+    lcd.print("ON ");
   }
   else if (tempC < setLow) {
     digitalWrite(relayPin, LOW);
     lcd.setCursor(0,1);
-    lcd.print("Relay:OFF");
+    lcd.print("OFF");
   }
     else if (tempC > setHigh) {
     digitalWrite(relayPin, LOW);
     lcd.setCursor(0,1);
-    lcd.print("Relay:OFF");
+    lcd.print("OFF");
   }
   else {
     //digitalWrite(relayPin, LOW);
@@ -63,9 +65,9 @@ void loop() {
     //relayOn = false;
   }
 
-  lcd.setCursor(12,0);
+  lcd.setCursor(9,0);
   lcd.print("L:"); lcd.print(setLow);
-  lcd.setCursor(12,1);
+  lcd.setCursor(9,1);
   lcd.print("H:"); lcd.print(setHigh);
   delay(3000);
 }
